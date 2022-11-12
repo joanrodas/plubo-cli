@@ -1,4 +1,4 @@
-module https://github.com/joanrodas/plubo-cli
+module github.com/joanrodas/plubo-cli
 
 go 1.19
 
