@@ -198,14 +198,16 @@ func component(name string) {
 }
 
 func utils(name string) {
-	// exPath, _ := script.Exec("pwd").Exec("tr -d '\n'").String()
+	exPath, _ := script.Exec("pwd").Exec("tr -d '\n'").String()
 
-	switch name {
-	case "api", "endpoint", "endpoints", "api-endpoint", "api-endpoints":
-		fmt.Println("CREATE API")
-	default:
-		color.Cyan("\nTo the rational mind, nothing is inexplicable; only unexplained.\n\n")
+	file, err := os.Create(exPath + "/Utils/" + name + ".php")
+	if err != nil {
+		fmt.Println(err)
+	} else {
+		file.WriteString("")
+		fmt.Println("UTILS " + name + " CREATED")
 	}
+	file.Close()
 }
 
 func lib(name string) {

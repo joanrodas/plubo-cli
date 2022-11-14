@@ -36,14 +36,6 @@ class ReactLoader
 
 				wp_register_script($script_handle . '-script', $script_url, $script_asset['dependencies'], $script_asset['version']);
 				wp_register_style($script_handle . '-style', $style_url, [], $script_asset['version']);
-
-				wp_localize_script(
-					$script_handle . '-script',
-					'PLUGIN_PLACEHOLDER_ARGS',
-					[
-						'api' => esc_url_raw(rest_url('plugin_placeholder/v1'))
-					]
-				);
 			}
 		});
 
@@ -53,6 +45,13 @@ class ReactLoader
 				add_shortcode($script_handle, function ($atts, $content, $script_handle) {
 					wp_enqueue_script($script_handle . '-script');
 					wp_enqueue_style($script_handle . '-style');
+					wp_localize_script(
+						$script_handle . '-script',
+						'PLUGIN_PLACEHOLDER_ARGS',
+						[
+							'api' => esc_url_raw(rest_url('plugin_placeholder/v1'))
+						]
+					);
 					wp_set_script_translations($script_handle . '-script', 'plugin-placeholder', PLUGIN_PLACEHOLDER_PATH . 'languages');
 					return "<div id='react-$script_handle'></div>";
 				});
