@@ -4,12 +4,13 @@ import (
 	"embed"
 	"encoding/json"
 	"fmt"
-	"github.com/bitfield/script"
-	"github.com/fatih/color"
 	"io/ioutil"
 	"os"
 	"path/filepath"
 	"strings"
+
+	"github.com/bitfield/script"
+	"github.com/fatih/color"
 )
 
 //go:embed functionalities/*.php
@@ -165,7 +166,18 @@ func create(functionality string) {
 		}
 		file.Close()
 	default:
-		color.Cyan("\nTo the rational mind, nothing is inexplicable; only unexplained.\n\n")
+		original_text, _ := content.ReadFile("functionalities/BaseFunctionality.php")
+		to_replace, _ := script.Echo(functionality).Exec("tr -d '\n'").Exec("awk 'BEGIN{FS=\"\";RS=\"-\";ORS=\"\"} {$0=toupper(substr($0,1,1)) substr($0,2)} 1'").String()
+
+		file, err := os.Create(exPath + "/Functionality/" + to_replace + ".php")
+		new_text := namespace_file(exPath, strings.Replace(string(original_text), "BaseFunctionality", to_replace, -1))
+		if err != nil {
+			fmt.Println(err)
+		} else {
+			file.WriteString(string(new_text))
+			fmt.Println(functionality + " CLASS CREATED")
+		}
+		file.Close()
 	}
 }
 
@@ -175,7 +187,7 @@ func component(name string) {
 
 	original_text, _ := content.ReadFile("components/BaseComponent.php")
 	file, err := os.Create(exPath + "/Components/" + to_replace + ".php")
-	new_text := namespace_file(exPath, string(original_text))
+	new_text := namespace_file(exPath, strings.Replace(string(original_text), "BaseComponent", to_replace, -1))
 	if err != nil {
 		fmt.Println(err)
 	} else {
