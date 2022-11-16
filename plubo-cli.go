@@ -13,7 +13,7 @@ import (
 	"github.com/fatih/color"
 )
 
-//go:embed functionalities/*.php
+//go:embed functionalities/*.php components/*.php alpine/alpine.ts tailwind/*
 var content embed.FS
 
 func main() {
@@ -94,7 +94,7 @@ func create(functionality string) {
 		} else {
 			file.WriteString(string(new_text))
 			fmt.Println("CUSTOM FIELDS CLASS CREATED")
-			script.Exec("composer require htmlburger/carbon-fields")
+			script.Exec("composer require htmlburger/carbon-fields").Stdout()
 		}
 		file.Close()
 	case "cpt", "custom-post-types", "custom-post-type", "post-type", "post-types":
@@ -128,7 +128,7 @@ func create(functionality string) {
 		} else {
 			file.WriteString(string(new_text))
 			fmt.Println("ROUTES CLASS CREATED")
-			script.Exec("composer require joanrodas/plubo-routes")
+			script.Exec("composer require joanrodas/plubo-routes").Stdout()
 		}
 		file.Close()
 	case "roles", "role":
@@ -140,7 +140,7 @@ func create(functionality string) {
 		} else {
 			file.WriteString(string(new_text))
 			fmt.Println("ROLES CLASS CREATED")
-			script.Exec("composer require joanrodas/plubo-roles")
+			script.Exec("composer require joanrodas/plubo-roles").Stdout()
 		}
 		file.Close()
 	case "shortcode", "shortcodes":
@@ -182,10 +182,10 @@ func create(functionality string) {
 }
 
 func component(name string) {
+	original_text, _ := content.ReadFile("components/BaseComponent.php")
 	exPath, _ := script.Exec("pwd").Exec("tr -d '\n'").String()
 	to_replace, _ := script.Echo(name).Exec("tr -d '\n'").Exec("awk 'BEGIN{FS=\"\";RS=\"-\";ORS=\"\"} {$0=toupper(substr($0,1,1)) substr($0,2)} 1'").String()
 
-	original_text, _ := content.ReadFile("components/BaseComponent.php")
 	file, err := os.Create(exPath + "/Components/" + to_replace + ".php")
 	new_text := namespace_file(exPath, strings.Replace(string(original_text), "BaseComponent", to_replace, -1))
 	if err != nil {
@@ -215,7 +215,7 @@ func lib(name string) {
 
 	switch name {
 	case "alpine":
-		script.Exec("yarn add alpinejs")
+		script.Exec("yarn add alpinejs").Stdout()
 		original_text, _ := content.ReadFile("alpine/alpine.ts")
 		file, err := os.Create(exPath + "/resources/scripts/components/alpine.ts")
 		if err != nil {
@@ -226,7 +226,7 @@ func lib(name string) {
 		}
 		file.Close()
 	case "tailwind":
-		script.Exec("yarn add alpinejs")
+		script.Exec("yarn add tailwindcss").Stdout()
 		original_text, _ := content.ReadFile("tailwind/_tailwind.scss")
 		file, err := os.Create(exPath + "/resources/styles/components/_tailwind.scss")
 		if err != nil {
@@ -247,8 +247,8 @@ func lib(name string) {
 		}
 		file.Close()
 	case "env":
-		script.Exec("composer require vlucas/phpdotenv")
-		script.Exec("touch .env")
+		script.Exec("composer require vlucas/phpdotenv").Stdout()
+		script.Exec("touch .env").Stdout()
 		fmt.Println("ADD ENV")
 	case "react":
 		fmt.Println("ADD REACT")
@@ -286,7 +286,6 @@ func namespace_project(path string) {
 
 		if err != nil {
 			panic(err)
-			return err
 		}
 
 		if matched {
@@ -311,7 +310,7 @@ func namespace_project(path string) {
 	if err != nil {
 		panic(err)
 	}
-	script.Exec("composer install")
+	script.Exec("composer install").Stdout()
 	return
 }
 
