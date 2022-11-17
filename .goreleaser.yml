@@ -26,11 +26,11 @@ changelog:
       - '^docs:'
       - '^test:'
 nfpms:
-- maintainer: Carlos A Becker <root@carlosbecker.dev>
-  description: Sample project.
-  homepage: https://github.com/caarlos0/tasktimer
-  license: MIT
+- maintainer: Joan Rodas Cusidó <joan@sirvelia.com>
+  description: Plubo CLI
+  homepage: https://www.plubo.dev/
+  license: GNU GPLv3
   formats:
   - deb
   - rpm
-  - apk
+  - archlinux
