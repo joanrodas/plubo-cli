@@ -37,7 +37,7 @@ func main() {
 
 	} else if len(args) > 0 {
 		switch args[0] {
-		case "init_template":
+		case "init_template", "init-template", "init-repo", "init_repo", "namespace-project":
 			init_template()
 		}
 	} else {
@@ -336,7 +336,7 @@ func init_template() {
 
 	if current_repo == "" {
 		fmt.Println("Unknown Github Repo")
-		return
+		//return
 	}
 
 	namespace_project(exPath)
