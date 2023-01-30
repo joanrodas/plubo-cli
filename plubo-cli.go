@@ -25,7 +25,7 @@ func main() {
 
 	if len(args) > 1 {
 		switch args[0] {
-		case "create", "functionality", "func":
+		case "create", "functionality", "func", "add":
 			create(args[1])
 		case "component", "comp":
 			component(args[1])
@@ -341,12 +341,15 @@ func init_template() {
 
 	namespace_project(exPath)
 
+	to_replace_pascal, _ := script.Exec("basename " + exPath).Exec("tr -d '\n'").Exec("awk 'BEGIN{FS=\"\";RS=\"-\";ORS=\"\"} {$0=toupper(substr($0,1,1)) substr($0,2)} 1'").String()
+
 	//COMPOSER.JSON
 	composer_name := strings.ToLower(current_repo)
 	composer, _ := script.File("./composer.json").String()
 	var composer_json map[string]interface{}
 	json.Unmarshal([]byte(composer), &composer_json)
 	composer_json["name"] = composer_name
+	composer_json["autoload"] = strings.Replace(fmt.Sprint(composer_json["autoload"]), "PluginPlaceholder", to_replace_pascal, -1)
 	composer_json["description"] = "An amazing plugin made with PLUBO"
 	composer_data, _ := json.MarshalIndent(composer_json, "", "\t")
 	script.Echo(string(composer_data)).WriteFile("composer.json")
