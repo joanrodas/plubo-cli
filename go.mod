@@ -3,7 +3,7 @@ module github.com/joanrodas/plubo-cli
 go 1.19
 
 require (
-	github.com/bitfield/script v0.21.3
+	github.com/bitfield/script v0.21.4
 	github.com/fatih/color v1.13.0
 )
 
