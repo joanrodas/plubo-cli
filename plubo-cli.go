@@ -347,9 +347,13 @@ func init_template() {
 	composer_name := strings.ToLower(current_repo)
 	composer, _ := script.File("./composer.json").String()
 	var composer_json map[string]interface{}
+	var autoload_json map[string]interface{}
 	json.Unmarshal([]byte(composer), &composer_json)
 	composer_json["name"] = composer_name
-	composer_json["autoload"] = strings.Replace(fmt.Sprint(composer_json["autoload"]), "PluginPlaceholder", to_replace_pascal, -1)
+	autoload, _ := json.MarshalIndent(composer_json["autoload"], "", "")
+	changed_autoload := strings.Replace(string(autoload), "PluginPlaceholder", to_replace_pascal, -1)
+	json.Unmarshal([]byte(changed_autoload), &autoload_json)
+	composer_json["autoload"] = autoload_json
 	composer_json["description"] = "An amazing plugin made with PLUBO"
 	composer_data, _ := json.MarshalIndent(composer_json, "", "\t")
 	script.Echo(string(composer_data)).WriteFile("composer.json")
