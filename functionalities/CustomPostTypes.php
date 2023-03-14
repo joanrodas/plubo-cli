@@ -2,7 +2,7 @@
 
 namespace PluginPlaceholder\Functionality;
 
-use \PluginPlaceholder\Components\Book;
+//use \PluginPlaceholder\Components\Book;
 
 class CustomPostTypes
 {
