@@ -28,6 +28,14 @@ class Routes
 
     public function add_routes($routes)
     {
+        // $routes[] = new Route(
+        //     'test/{param:slug}',
+        //     'theme_template_name',
+        //     [
+        //         'name' => 'my-route',
+        //     ]
+        // );
+
         return $routes;
     }
 }

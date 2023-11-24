@@ -18,5 +18,6 @@ class BaseFunctionality
 
     public function example_function()
     {
+        
     }
 }

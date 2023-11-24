@@ -19,19 +19,25 @@ class Shortcodes
         $this->blade = BladeLoader::getInstance();
 
         add_action('init', [$this, 'add_shortcodes']);
-        add_filter('do_shortcode_tag', function ($output, $tag, $attr) {
-            return "<span style='display: none;' class='plubo-shortcode' data-tag='$tag'></span>" . $output;
-        }, 22, 3);
+        add_action('wp_enqueue_scripts', [$this, 'register_scripts']);
+    }
+
+    public function register_scripts()
+    {
+        // wp_register_style('test', PLUGIN_PLACEHOLDER_URL . pb_asset('app.css'), [], $this->plugin_version);
+        // wp_register_script('test', PLUGIN_PLACEHOLDER_URL . pb_asset('app.js'), [], $this->plugin_version);
     }
 
     public function add_shortcodes()
     {
-        //add_shortcode( 'test', [$this, 'example_function'] );
-        return;
+        //add_shortcode( 'test', [$this, 'test_shortcode'] );
     }
 
-    public function example_function($atts, $content = "")
+    public function test_shortcode($atts, $content = "")
     {
-        //return $this->blade->template('test');
+        // wp_enqueue_style('test');
+        // wp_enqueue_script('test');
+
+        // return $this->blade->template('test', []);
     }
 }

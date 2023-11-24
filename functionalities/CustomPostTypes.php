@@ -18,16 +18,16 @@ class CustomPostTypes
 
     public function register_post_types()
     {
-        register_post_type('plubo', [
-            'public'    => true,
-            'show_in_rest' => true,
-            'label'     => __('Plubo', 'plugin-placeholder'),
-            'menu_icon' => 'dashicons-book',
-            'capability_type'    => 'post',
-            'has_archive'        => true,
-            'hierarchical'       => false,
-            'menu_position'      => 20,
-            'supports'           => ['title', 'editor', 'author', 'thumbnail'],
-        ]);
+        // register_post_type('plubo', [
+        //     'public'    => true,
+        //     'show_in_rest' => true,
+        //     'label'     => __('Plubo', 'plugin-placeholder'),
+        //     'menu_icon' => 'dashicons-book',
+        //     'capability_type'    => 'post',
+        //     'has_archive'        => true,
+        //     'hierarchical'       => false,
+        //     'menu_position'      => 20,
+        //     'supports'           => ['title', 'editor', 'author', 'thumbnail'],
+        // ]);
     }
 }

@@ -336,7 +336,6 @@ func init_template() {
 
 	if current_repo == "" {
 		fmt.Println("Unknown Github Repo")
-		//return
 	}
 
 	namespace_project(exPath)
@@ -355,6 +354,7 @@ func init_template() {
 	json.Unmarshal([]byte(changed_autoload), &autoload_json)
 	composer_json["autoload"] = autoload_json
 	composer_json["description"] = "An amazing plugin made with PLUBO"
+	composer_json["type"] = "wordpress-plugin"
 	composer_data, _ := json.MarshalIndent(composer_json, "", "\t")
 	script.Echo(string(composer_data)).WriteFile("composer.json")
 
