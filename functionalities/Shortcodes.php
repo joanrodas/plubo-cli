@@ -24,8 +24,8 @@ class Shortcodes
 
     public function register_scripts()
     {
-        // wp_register_style('test', PLUGIN_PLACEHOLDER_URL . pb_asset('app.css'), [], $this->plugin_version);
-        // wp_register_script('test', PLUGIN_PLACEHOLDER_URL . pb_asset('app.js'), [], $this->plugin_version);
+        // wp_register_style('test', pb_asset('app.css'), [], $this->plugin_version);
+        // wp_register_script('test', pb_asset('app.js'), [], $this->plugin_version);
     }
 
     public function add_shortcodes()
